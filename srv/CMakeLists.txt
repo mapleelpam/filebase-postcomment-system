@@ -15,7 +15,7 @@ INCLUDE_DIRECTORIES(
     )
 
 ADD_EXECUTABLE( fdbd
-    ${CMAKE_SOURCE_DIR}/srv/main.cpp
+    ${CMAKE_SOURCE_DIR}/srv/srv.cpp
     ${PROTP_THRIFT_SRC} 
     )
 

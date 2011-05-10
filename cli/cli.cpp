@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <iostream>
 
 #include <protocol/TBinaryProtocol.h>
 #include <transport/TSocket.h>
@@ -46,6 +47,10 @@ int main(int argc, char** argv) {
     client.ping();
     printf("ping()\n");
 
+    tw::maple::generated::UUID uuid;
+    client.newPost( uuid, "maple", "hello world" );
+
+    std::cerr << "got post uuid "<< uuid<<std::endl;
 
     transport->close();
   } catch (TException &tx) {
