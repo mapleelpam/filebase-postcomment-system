@@ -13,5 +13,7 @@ service PostSystem
     bool    rmComment( 1: UUID post_id, 2: UUID comment ),
 
     string  getContent( 1: UUID post_id ),
+
+    void    ping();
 }
 

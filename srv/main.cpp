@@ -72,6 +72,11 @@ class PostSystemHandler : virtual public PostSystemIf {
     // Your implementation goes here
     printf("getContent\n");
   }
+  void ping() {
+    // Your implementation goes here
+    printf("ping\n");
+  }
+
 
 };
 

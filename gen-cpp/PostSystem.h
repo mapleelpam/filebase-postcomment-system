@@ -19,6 +19,7 @@ class PostSystemIf {
   virtual void newComment(UUID& _return, const UUID& post_id, const std::string& comment) = 0;
   virtual bool rmComment(const UUID& post_id, const UUID& comment) = 0;
   virtual void getContent(std::string& _return, const UUID& post_id) = 0;
+  virtual void ping() = 0;
 };
 
 class PostSystemNull : virtual public PostSystemIf {
@@ -39,6 +40,9 @@ class PostSystemNull : virtual public PostSystemIf {
     return _return;
   }
   void getContent(std::string& /* _return */, const UUID& /* post_id */) {
+    return;
+  }
+  void ping() {
     return;
   }
 };
@@ -558,6 +562,80 @@ class PostSystem_getContent_presult {
 
 };
 
+
+class PostSystem_ping_args {
+ public:
+
+  PostSystem_ping_args() {
+  }
+
+  virtual ~PostSystem_ping_args() throw() {}
+
+
+  bool operator == (const PostSystem_ping_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PostSystem_ping_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PostSystem_ping_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PostSystem_ping_pargs {
+ public:
+
+
+  virtual ~PostSystem_ping_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PostSystem_ping_result {
+ public:
+
+  PostSystem_ping_result() {
+  }
+
+  virtual ~PostSystem_ping_result() throw() {}
+
+
+  bool operator == (const PostSystem_ping_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const PostSystem_ping_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PostSystem_ping_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class PostSystem_ping_presult {
+ public:
+
+
+  virtual ~PostSystem_ping_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class PostSystemClient : virtual public PostSystemIf {
  public:
   PostSystemClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -593,6 +671,9 @@ class PostSystemClient : virtual public PostSystemIf {
   void getContent(std::string& _return, const UUID& post_id);
   void send_getContent(const UUID& post_id);
   void recv_getContent(std::string& _return);
+  void ping();
+  void send_ping();
+  void recv_ping();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -611,6 +692,7 @@ class PostSystemProcessor : virtual public ::apache::thrift::TProcessor {
   void process_newComment(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_rmComment(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getContent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ping(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   PostSystemProcessor(boost::shared_ptr<PostSystemIf> iface) :
     iface_(iface) {
@@ -619,6 +701,7 @@ class PostSystemProcessor : virtual public ::apache::thrift::TProcessor {
     processMap_["newComment"] = &PostSystemProcessor::process_newComment;
     processMap_["rmComment"] = &PostSystemProcessor::process_rmComment;
     processMap_["getContent"] = &PostSystemProcessor::process_getContent;
+    processMap_["ping"] = &PostSystemProcessor::process_ping;
   }
 
   virtual bool process(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot, boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot, void* callContext);
@@ -692,6 +775,13 @@ class PostSystemMultiface : virtual public PostSystemIf {
       } else {
         ifaces_[i]->getContent(_return, post_id);
       }
+    }
+  }
+
+  void ping() {
+    uint32_t sz = ifaces_.size();
+    for (uint32_t i = 0; i < sz; ++i) {
+      ifaces_[i]->ping();
     }
   }
 
