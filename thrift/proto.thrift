@@ -3,6 +3,7 @@ namespace java tw.maple.generated
 namespace cpp tw.maple.generated
 
 typedef string UUID
+typedef string URL
 
 service PostSystem
 {
@@ -17,3 +18,21 @@ service PostSystem
     void    ping();
 }
 
+enum DataFormat
+{
+    TEXT,
+    IMAGE,
+    AUDIO,
+    VIDEO,
+}
+
+
+service RepositoryService
+{
+    bool    userLogin( 1: string repo_name, 2: string username="anonymouse", 3: string password="anonymouse"),
+    byte    getUserPermissionMask(),
+
+    UUID    addTextData( 1: string content, 2: string categories = "default", 3: i32 default_expire_time = 0 /*zero for presistent, minutes*/ ),
+    bool    modifyTextData( 1: string repo_name, 2: UUID instance_id, 3: string new_content ),
+    URL     getTextURL( 1: string repo_name, 2: UUID instance_id ),
+}

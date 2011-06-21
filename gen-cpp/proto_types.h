@@ -15,7 +15,20 @@
 
 namespace tw { namespace maple { namespace generated {
 
+struct DataFormat {
+  enum type {
+    TEXT = 0,
+    IMAGE = 1,
+    AUDIO = 2,
+    VIDEO = 3
+  };
+};
+
+extern const std::map<int, const char*> _DataFormat_VALUES_TO_NAMES;
+
 typedef std::string UUID;
+
+typedef std::string URL;
 
 }}} // namespace
 

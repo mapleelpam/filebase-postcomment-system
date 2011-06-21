@@ -7,4 +7,18 @@
 
 namespace tw { namespace maple { namespace generated {
 
+int _kDataFormatValues[] = {
+  DataFormat::TEXT,
+  DataFormat::IMAGE,
+  DataFormat::AUDIO,
+  DataFormat::VIDEO
+};
+const char* _kDataFormatNames[] = {
+  "TEXT",
+  "IMAGE",
+  "AUDIO",
+  "VIDEO"
+};
+const std::map<int, const char*> _DataFormat_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(4, _kDataFormatValues, _kDataFormatNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
 }}} // namespace

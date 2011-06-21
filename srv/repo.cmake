@@ -4,25 +4,22 @@
 
 # Author: mapleelpam at gmail.com - Kai-Feng Chou - maple
 
-PROJECT( fdbd)
+PROJECT( repod)
 
 
-SET( PROTP_THRIFT_SRC ${CMAKE_SOURCE_DIR}/gen-cpp/PostSystem.cpp ${CMAKE_SOURCE_DIR}/gen-cpp/proto_constants.cpp ${CMAKE_SOURCE_DIR}/gen-cpp/proto_types.cpp )
+SET( PROTP_THRIFT_SRC ${CMAKE_SOURCE_DIR}/gen-cpp/RepositoryService.cpp ${CMAKE_SOURCE_DIR}/gen-cpp/proto_constants.cpp ${CMAKE_SOURCE_DIR}/gen-cpp/proto_types.cpp )
 
 INCLUDE_DIRECTORIES(
-    ${CMAKE_SOURCE_DIR}/
     ${CMAKE_SOURCE_DIR}/gen-cpp
     ${THRIFT_INCLUDE_DIR}
     )
 
-ADD_EXECUTABLE( fdbd
-    ${CMAKE_SOURCE_DIR}/srv/srv.cpp
+ADD_EXECUTABLE( repod
+    ${CMAKE_SOURCE_DIR}/srv/repo_srv.cpp
     ${PROTP_THRIFT_SRC} 
     )
 
-TARGET_LINK_LIBRARIES( fdbd
+TARGET_LINK_LIBRARIES( repod
     ${THRIFT_LIBS}
     ${Boost_LIBRARIES}
     )
-
-include( repo.cmake )

@@ -23,3 +23,5 @@ TARGET_LINK_LIBRARIES( fdbc
     ${THRIFT_LIBS}
     ${Boost_LIBRARIES}
     )
+
+include( repo.cmake )

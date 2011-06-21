@@ -19,7 +19,7 @@
 #include <stdexcept>
 #include <sstream>
 
-#include "gen-cpp/PostSystem.h"
+#include "PostSystem.h"
 
 using namespace std;
 using namespace apache::thrift;
