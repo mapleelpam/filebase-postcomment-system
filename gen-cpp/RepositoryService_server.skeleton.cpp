@@ -42,7 +42,7 @@ class RepositoryServiceHandler : virtual public RepositoryServiceIf {
     printf("modifyTextData\n");
   }
 
-  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) {
+  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) {
     // Your implementation goes here
     printf("getTextURL\n");
   }

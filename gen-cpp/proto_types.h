@@ -15,6 +15,17 @@
 
 namespace tw { namespace maple { namespace generated {
 
+struct ErrorCode {
+  enum type {
+    SUCCESS = 0,
+    LOGIN_FAIL = 1,
+    CANT_FOUND_REPO = 2,
+    CANT_FOUND_UUID = 3
+  };
+};
+
+extern const std::map<int, const char*> _ErrorCode_VALUES_TO_NAMES;
+
 struct DataFormat {
   enum type {
     TEXT = 0,
@@ -29,6 +40,47 @@ extern const std::map<int, const char*> _DataFormat_VALUES_TO_NAMES;
 typedef std::string UUID;
 
 typedef std::string URL;
+
+typedef struct _URL_Response__isset {
+  _URL_Response__isset() : address(false), error(false) {}
+  bool address;
+  bool error;
+} _URL_Response__isset;
+
+class URL_Response {
+ public:
+
+  static const char* ascii_fingerprint; // = "D6FD826D949221396F4FFC3ECCD3D192";
+  static const uint8_t binary_fingerprint[16]; // = {0xD6,0xFD,0x82,0x6D,0x94,0x92,0x21,0x39,0x6F,0x4F,0xFC,0x3E,0xCC,0xD3,0xD1,0x92};
+
+  URL_Response() : address("") {
+  }
+
+  virtual ~URL_Response() throw() {}
+
+  URL address;
+  ErrorCode::type error;
+
+  _URL_Response__isset __isset;
+
+  bool operator == (const URL_Response & rhs) const
+  {
+    if (!(address == rhs.address))
+      return false;
+    if (!(error == rhs.error))
+      return false;
+    return true;
+  }
+  bool operator != (const URL_Response &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const URL_Response & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
 
 }}} // namespace
 

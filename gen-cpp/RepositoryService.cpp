@@ -806,8 +806,8 @@ uint32_t RepositoryService_getTextURL_result::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->success);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->success.read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -832,8 +832,8 @@ uint32_t RepositoryService_getTextURL_result::write(::apache::thrift::protocol::
   xfer += oprot->writeStructBegin("RepositoryService_getTextURL_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
-    xfer += oprot->writeString(this->success);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
+    xfer += this->success.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -862,8 +862,8 @@ uint32_t RepositoryService_getTextURL_presult::read(::apache::thrift::protocol::
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString((*(this->success)));
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += (*(this->success)).read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -1118,7 +1118,7 @@ bool RepositoryServiceClient::recv_modifyTextData()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "modifyTextData failed: unknown result");
 }
 
-void RepositoryServiceClient::getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id)
+void RepositoryServiceClient::getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id)
 {
   send_getTextURL(repo_name, instance_id);
   recv_getTextURL(_return);
@@ -1139,7 +1139,7 @@ void RepositoryServiceClient::send_getTextURL(const std::string& repo_name, cons
   oprot_->getTransport()->flush();
 }
 
-void RepositoryServiceClient::recv_getTextURL(URL& _return)
+void RepositoryServiceClient::recv_getTextURL(URL_Response& _return)
 {
 
   int32_t rseqid = 0;

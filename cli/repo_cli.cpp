@@ -50,6 +50,9 @@ int main(int argc, char** argv) {
 
     std::cout << "login succeed !!"<<std::endl;
 //    std::cerr << "got post uuid "<< uuid<<std::endl;
+    tw::maple::generated::URL_Response respons;
+	client.getTextURL(respons, "hello", "world");
+	std::cout << "success url = "<<respons.address<<std::endl;
 
     transport->close();
   } catch (TException &tx) {

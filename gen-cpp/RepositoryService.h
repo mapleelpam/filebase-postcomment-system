@@ -18,7 +18,7 @@ class RepositoryServiceIf {
   virtual int8_t getUserPermissionMask() = 0;
   virtual void addTextData(UUID& _return, const std::string& content, const std::string& categories, const int32_t default_expire_time) = 0;
   virtual bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) = 0;
-  virtual void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) = 0;
+  virtual void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) = 0;
 };
 
 class RepositoryServiceNull : virtual public RepositoryServiceIf {
@@ -39,7 +39,7 @@ class RepositoryServiceNull : virtual public RepositoryServiceIf {
     bool _return = false;
     return _return;
   }
-  void getTextURL(URL& /* _return */, const std::string& /* repo_name */, const UUID& /* instance_id */) {
+  void getTextURL(URL_Response& /* _return */, const std::string& /* repo_name */, const UUID& /* instance_id */) {
     return;
   }
 };
@@ -524,12 +524,12 @@ typedef struct _RepositoryService_getTextURL_result__isset {
 class RepositoryService_getTextURL_result {
  public:
 
-  RepositoryService_getTextURL_result() : success("") {
+  RepositoryService_getTextURL_result() {
   }
 
   virtual ~RepositoryService_getTextURL_result() throw() {}
 
-  URL success;
+  URL_Response success;
 
   _RepositoryService_getTextURL_result__isset __isset;
 
@@ -561,7 +561,7 @@ class RepositoryService_getTextURL_presult {
 
   virtual ~RepositoryService_getTextURL_presult() throw() {}
 
-  URL* success;
+  URL_Response* success;
 
   _RepositoryService_getTextURL_presult__isset __isset;
 
@@ -601,9 +601,9 @@ class RepositoryServiceClient : virtual public RepositoryServiceIf {
   bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content);
   void send_modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content);
   bool recv_modifyTextData();
-  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id);
+  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id);
   void send_getTextURL(const std::string& repo_name, const UUID& instance_id);
-  void recv_getTextURL(URL& _return);
+  void recv_getTextURL(URL_Response& _return);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -693,7 +693,7 @@ class RepositoryServiceMultiface : virtual public RepositoryServiceIf {
     }
   }
 
-  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) {
+  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {

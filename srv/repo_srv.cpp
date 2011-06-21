@@ -48,10 +48,11 @@ class RepositoryServiceHandler : virtual public RepositoryServiceIf {
     return true;
   }
 
-  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) {
+  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) {
     // Your implementation goes here
     printf("getTextURL\n");
-    _return = "dummy";
+    _return.address = "fuck";
+    _return.error = tw::maple::generated::ErrorCode::SUCCESS;
     return;
   }
 

@@ -5,6 +5,20 @@ namespace cpp tw.maple.generated
 typedef string UUID
 typedef string URL
 
+enum ErrorCode
+{
+	SUCCESS,
+	LOGIN_FAIL,
+	CANT_FOUND_REPO,
+	CANT_FOUND_UUID,
+}
+
+struct URL_Response
+{
+	1: URL			address,
+	2: ErrorCode	error,
+}
+
 service PostSystem
 {
     UUID    newPost( 1: string user, 2: string content ),
@@ -34,5 +48,7 @@ service RepositoryService
 
     UUID    addTextData( 1: string content, 2: string categories = "default", 3: i32 default_expire_time = 0 /*zero for presistent, minutes*/ ),
     bool    modifyTextData( 1: string repo_name, 2: UUID instance_id, 3: string new_content ),
-    URL     getTextURL( 1: string repo_name, 2: UUID instance_id ),
+
+    URL_Response	getTextURL( 1: string repo_name, 2: UUID instance_id ),
+   // URL_Response	getTextURL( 1: string repo_name, 2: UUID instance_id ),
 }
