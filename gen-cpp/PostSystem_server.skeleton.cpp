@@ -22,22 +22,22 @@ class PostSystemHandler : virtual public PostSystemIf {
     // Your initialization goes here
   }
 
-  void newPost(UUID& _return, const std::string& user, const std::string& content) {
+  void newPost(UUIDResponse& _return, const std::string& user, const std::string& content) {
     // Your implementation goes here
     printf("newPost\n");
   }
 
-  bool deletePost(const UUID& post_id) {
+  ErrorCode::type deletePost(const UUID& post_id) {
     // Your implementation goes here
     printf("deletePost\n");
   }
 
-  void newComment(UUID& _return, const UUID& post_id, const std::string& comment) {
+  void newComment(UUIDResponse& _return, const UUID& post_id, const std::string& comment) {
     // Your implementation goes here
     printf("newComment\n");
   }
 
-  bool rmComment(const UUID& post_id, const UUID& comment) {
+  ErrorCode::type rmComment(const UUID& post_id, const UUID& comment) {
     // Your implementation goes here
     printf("rmComment\n");
   }

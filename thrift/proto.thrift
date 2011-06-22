@@ -5,32 +5,33 @@ namespace cpp tw.maple.generated
 typedef string UUID
 typedef string URL
 
-enum ErrorCode
-{
-	SUCCESS,
-	LOGIN_FAIL,
-	CANT_FOUND_REPO,
-	CANT_FOUND_UUID,
+#
+# Exceptions
+# (note that internal server errors will raise a TApplicationException, courtesy of Thrift)
+#
+
+/** A specific column was requested that does not exist. */
+exception NotFoundException {
 }
 
-struct URL_Response
-{
-	1: URL			address,
-	2: ErrorCode	error,
+exception InvalidRequestException {
+    1: required string why
 }
 
-service PostSystem
-{
-    UUID    newPost( 1: string user, 2: string content ),
-    bool    deletePost( 1: UUID post_id ),
-
-    UUID    newComment( 1: UUID post_id, 2: string comment ),
-    bool    rmComment( 1: UUID post_id, 2: UUID comment ),
-
-    string  getContent( 1: UUID post_id ),
-
-    void    ping();
+exception UnavailableException {
 }
+
+exception TimedOutException {
+}
+
+exception AuthenticationException {
+    1: required string why
+}
+
+exception AuthorizationException {
+    1: required string why
+}
+
 
 enum DataFormat
 {
@@ -43,12 +44,25 @@ enum DataFormat
 
 service RepositoryService
 {
-    bool    userLogin( 1: string repo_name, 2: string username="anonymouse", 3: string password="anonymouse"),
-    byte    getUserPermissionMask(),
+    void userLogin( 1: string repo_name, 2: string username="anonymouse", 3: string password="anonymouse")
+        throws (1:AuthenticationException ire,
+                2:UnavailableException ue),
+    byte    getUserPermissionMask()
+        throws (1:AuthenticationException authnx),
 
-    UUID    addTextData( 1: string content, 2: string categories = "default", 3: i32 default_expire_time = 0 /*zero for presistent, minutes*/ ),
-    bool    modifyTextData( 1: string repo_name, 2: UUID instance_id, 3: string new_content ),
+    UUID addTextData( 1: string content, 2: string categories = "default", 3: i32 default_expire_time = 0 /*zero for presistent, minutes*/ )
+        throws (1:AuthenticationException authnx,
+                2:UnavailableException ue,
+                3:TimedOutException te),
+    void modifyTextData( 1: string repo_name, 2: UUID instance_id, 3: string new_content )
+        throws (1:AuthenticationException authnx,
+                2:NotFoundException nfe,
+                3:UnavailableException ue,
+                4:TimedOutException te),
 
-    URL_Response	getTextURL( 1: string repo_name, 2: UUID instance_id ),
-   // URL_Response	getTextURL( 1: string repo_name, 2: UUID instance_id ),
+    URL getTextURL( 1: string repo_name, 2: UUID instance_id )
+        throws (1:AuthenticationException authnx,
+                2:NotFoundException ne,
+                3:UnavailableException ue,
+                4:TimedOutException te),
 }

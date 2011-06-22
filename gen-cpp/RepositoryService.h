@@ -14,19 +14,18 @@ namespace tw { namespace maple { namespace generated {
 class RepositoryServiceIf {
  public:
   virtual ~RepositoryServiceIf() {}
-  virtual bool userLogin(const std::string& repo_name, const std::string& username, const std::string& password) = 0;
+  virtual void userLogin(const std::string& repo_name, const std::string& username, const std::string& password) = 0;
   virtual int8_t getUserPermissionMask() = 0;
   virtual void addTextData(UUID& _return, const std::string& content, const std::string& categories, const int32_t default_expire_time) = 0;
-  virtual bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) = 0;
-  virtual void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) = 0;
+  virtual void modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) = 0;
+  virtual void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) = 0;
 };
 
 class RepositoryServiceNull : virtual public RepositoryServiceIf {
  public:
   virtual ~RepositoryServiceNull() {}
-  bool userLogin(const std::string& /* repo_name */, const std::string& /* username */, const std::string& /* password */) {
-    bool _return = false;
-    return _return;
+  void userLogin(const std::string& /* repo_name */, const std::string& /* username */, const std::string& /* password */) {
+    return;
   }
   int8_t getUserPermissionMask() {
     int8_t _return = 0;
@@ -35,11 +34,10 @@ class RepositoryServiceNull : virtual public RepositoryServiceIf {
   void addTextData(UUID& /* _return */, const std::string& /* content */, const std::string& /* categories */, const int32_t /* default_expire_time */) {
     return;
   }
-  bool modifyTextData(const std::string& /* repo_name */, const UUID& /* instance_id */, const std::string& /* new_content */) {
-    bool _return = false;
-    return _return;
+  void modifyTextData(const std::string& /* repo_name */, const UUID& /* instance_id */, const std::string& /* new_content */) {
+    return;
   }
-  void getTextURL(URL_Response& /* _return */, const std::string& /* repo_name */, const UUID& /* instance_id */) {
+  void getTextURL(URL& /* _return */, const std::string& /* repo_name */, const UUID& /* instance_id */) {
     return;
   }
 };
@@ -102,25 +100,29 @@ class RepositoryService_userLogin_pargs {
 };
 
 typedef struct _RepositoryService_userLogin_result__isset {
-  _RepositoryService_userLogin_result__isset() : success(false) {}
-  bool success;
+  _RepositoryService_userLogin_result__isset() : ire(false), ue(false) {}
+  bool ire;
+  bool ue;
 } _RepositoryService_userLogin_result__isset;
 
 class RepositoryService_userLogin_result {
  public:
 
-  RepositoryService_userLogin_result() : success(0) {
+  RepositoryService_userLogin_result() {
   }
 
   virtual ~RepositoryService_userLogin_result() throw() {}
 
-  bool success;
+  AuthenticationException ire;
+  UnavailableException ue;
 
   _RepositoryService_userLogin_result__isset __isset;
 
   bool operator == (const RepositoryService_userLogin_result & rhs) const
   {
-    if (!(success == rhs.success))
+    if (!(ire == rhs.ire))
+      return false;
+    if (!(ue == rhs.ue))
       return false;
     return true;
   }
@@ -136,8 +138,9 @@ class RepositoryService_userLogin_result {
 };
 
 typedef struct _RepositoryService_userLogin_presult__isset {
-  _RepositoryService_userLogin_presult__isset() : success(false) {}
-  bool success;
+  _RepositoryService_userLogin_presult__isset() : ire(false), ue(false) {}
+  bool ire;
+  bool ue;
 } _RepositoryService_userLogin_presult__isset;
 
 class RepositoryService_userLogin_presult {
@@ -146,7 +149,8 @@ class RepositoryService_userLogin_presult {
 
   virtual ~RepositoryService_userLogin_presult() throw() {}
 
-  bool* success;
+  AuthenticationException ire;
+  UnavailableException ue;
 
   _RepositoryService_userLogin_presult__isset __isset;
 
@@ -192,8 +196,9 @@ class RepositoryService_getUserPermissionMask_pargs {
 };
 
 typedef struct _RepositoryService_getUserPermissionMask_result__isset {
-  _RepositoryService_getUserPermissionMask_result__isset() : success(false) {}
+  _RepositoryService_getUserPermissionMask_result__isset() : success(false), authnx(false) {}
   bool success;
+  bool authnx;
 } _RepositoryService_getUserPermissionMask_result__isset;
 
 class RepositoryService_getUserPermissionMask_result {
@@ -205,12 +210,15 @@ class RepositoryService_getUserPermissionMask_result {
   virtual ~RepositoryService_getUserPermissionMask_result() throw() {}
 
   int8_t success;
+  AuthenticationException authnx;
 
   _RepositoryService_getUserPermissionMask_result__isset __isset;
 
   bool operator == (const RepositoryService_getUserPermissionMask_result & rhs) const
   {
     if (!(success == rhs.success))
+      return false;
+    if (!(authnx == rhs.authnx))
       return false;
     return true;
   }
@@ -226,8 +234,9 @@ class RepositoryService_getUserPermissionMask_result {
 };
 
 typedef struct _RepositoryService_getUserPermissionMask_presult__isset {
-  _RepositoryService_getUserPermissionMask_presult__isset() : success(false) {}
+  _RepositoryService_getUserPermissionMask_presult__isset() : success(false), authnx(false) {}
   bool success;
+  bool authnx;
 } _RepositoryService_getUserPermissionMask_presult__isset;
 
 class RepositoryService_getUserPermissionMask_presult {
@@ -237,6 +246,7 @@ class RepositoryService_getUserPermissionMask_presult {
   virtual ~RepositoryService_getUserPermissionMask_presult() throw() {}
 
   int8_t* success;
+  AuthenticationException authnx;
 
   _RepositoryService_getUserPermissionMask_presult__isset __isset;
 
@@ -302,8 +312,11 @@ class RepositoryService_addTextData_pargs {
 };
 
 typedef struct _RepositoryService_addTextData_result__isset {
-  _RepositoryService_addTextData_result__isset() : success(false) {}
+  _RepositoryService_addTextData_result__isset() : success(false), authnx(false), ue(false), te(false) {}
   bool success;
+  bool authnx;
+  bool ue;
+  bool te;
 } _RepositoryService_addTextData_result__isset;
 
 class RepositoryService_addTextData_result {
@@ -315,12 +328,21 @@ class RepositoryService_addTextData_result {
   virtual ~RepositoryService_addTextData_result() throw() {}
 
   UUID success;
+  AuthenticationException authnx;
+  UnavailableException ue;
+  TimedOutException te;
 
   _RepositoryService_addTextData_result__isset __isset;
 
   bool operator == (const RepositoryService_addTextData_result & rhs) const
   {
     if (!(success == rhs.success))
+      return false;
+    if (!(authnx == rhs.authnx))
+      return false;
+    if (!(ue == rhs.ue))
+      return false;
+    if (!(te == rhs.te))
       return false;
     return true;
   }
@@ -336,8 +358,11 @@ class RepositoryService_addTextData_result {
 };
 
 typedef struct _RepositoryService_addTextData_presult__isset {
-  _RepositoryService_addTextData_presult__isset() : success(false) {}
+  _RepositoryService_addTextData_presult__isset() : success(false), authnx(false), ue(false), te(false) {}
   bool success;
+  bool authnx;
+  bool ue;
+  bool te;
 } _RepositoryService_addTextData_presult__isset;
 
 class RepositoryService_addTextData_presult {
@@ -347,6 +372,9 @@ class RepositoryService_addTextData_presult {
   virtual ~RepositoryService_addTextData_presult() throw() {}
 
   UUID* success;
+  AuthenticationException authnx;
+  UnavailableException ue;
+  TimedOutException te;
 
   _RepositoryService_addTextData_presult__isset __isset;
 
@@ -412,25 +440,37 @@ class RepositoryService_modifyTextData_pargs {
 };
 
 typedef struct _RepositoryService_modifyTextData_result__isset {
-  _RepositoryService_modifyTextData_result__isset() : success(false) {}
-  bool success;
+  _RepositoryService_modifyTextData_result__isset() : authnx(false), nfe(false), ue(false), te(false) {}
+  bool authnx;
+  bool nfe;
+  bool ue;
+  bool te;
 } _RepositoryService_modifyTextData_result__isset;
 
 class RepositoryService_modifyTextData_result {
  public:
 
-  RepositoryService_modifyTextData_result() : success(0) {
+  RepositoryService_modifyTextData_result() {
   }
 
   virtual ~RepositoryService_modifyTextData_result() throw() {}
 
-  bool success;
+  AuthenticationException authnx;
+  NotFoundException nfe;
+  UnavailableException ue;
+  TimedOutException te;
 
   _RepositoryService_modifyTextData_result__isset __isset;
 
   bool operator == (const RepositoryService_modifyTextData_result & rhs) const
   {
-    if (!(success == rhs.success))
+    if (!(authnx == rhs.authnx))
+      return false;
+    if (!(nfe == rhs.nfe))
+      return false;
+    if (!(ue == rhs.ue))
+      return false;
+    if (!(te == rhs.te))
       return false;
     return true;
   }
@@ -446,8 +486,11 @@ class RepositoryService_modifyTextData_result {
 };
 
 typedef struct _RepositoryService_modifyTextData_presult__isset {
-  _RepositoryService_modifyTextData_presult__isset() : success(false) {}
-  bool success;
+  _RepositoryService_modifyTextData_presult__isset() : authnx(false), nfe(false), ue(false), te(false) {}
+  bool authnx;
+  bool nfe;
+  bool ue;
+  bool te;
 } _RepositoryService_modifyTextData_presult__isset;
 
 class RepositoryService_modifyTextData_presult {
@@ -456,7 +499,10 @@ class RepositoryService_modifyTextData_presult {
 
   virtual ~RepositoryService_modifyTextData_presult() throw() {}
 
-  bool* success;
+  AuthenticationException authnx;
+  NotFoundException nfe;
+  UnavailableException ue;
+  TimedOutException te;
 
   _RepositoryService_modifyTextData_presult__isset __isset;
 
@@ -517,25 +563,41 @@ class RepositoryService_getTextURL_pargs {
 };
 
 typedef struct _RepositoryService_getTextURL_result__isset {
-  _RepositoryService_getTextURL_result__isset() : success(false) {}
+  _RepositoryService_getTextURL_result__isset() : success(false), authnx(false), ne(false), ue(false), te(false) {}
   bool success;
+  bool authnx;
+  bool ne;
+  bool ue;
+  bool te;
 } _RepositoryService_getTextURL_result__isset;
 
 class RepositoryService_getTextURL_result {
  public:
 
-  RepositoryService_getTextURL_result() {
+  RepositoryService_getTextURL_result() : success("") {
   }
 
   virtual ~RepositoryService_getTextURL_result() throw() {}
 
-  URL_Response success;
+  URL success;
+  AuthenticationException authnx;
+  NotFoundException ne;
+  UnavailableException ue;
+  TimedOutException te;
 
   _RepositoryService_getTextURL_result__isset __isset;
 
   bool operator == (const RepositoryService_getTextURL_result & rhs) const
   {
     if (!(success == rhs.success))
+      return false;
+    if (!(authnx == rhs.authnx))
+      return false;
+    if (!(ne == rhs.ne))
+      return false;
+    if (!(ue == rhs.ue))
+      return false;
+    if (!(te == rhs.te))
       return false;
     return true;
   }
@@ -551,8 +613,12 @@ class RepositoryService_getTextURL_result {
 };
 
 typedef struct _RepositoryService_getTextURL_presult__isset {
-  _RepositoryService_getTextURL_presult__isset() : success(false) {}
+  _RepositoryService_getTextURL_presult__isset() : success(false), authnx(false), ne(false), ue(false), te(false) {}
   bool success;
+  bool authnx;
+  bool ne;
+  bool ue;
+  bool te;
 } _RepositoryService_getTextURL_presult__isset;
 
 class RepositoryService_getTextURL_presult {
@@ -561,7 +627,11 @@ class RepositoryService_getTextURL_presult {
 
   virtual ~RepositoryService_getTextURL_presult() throw() {}
 
-  URL_Response* success;
+  URL* success;
+  AuthenticationException authnx;
+  NotFoundException ne;
+  UnavailableException ue;
+  TimedOutException te;
 
   _RepositoryService_getTextURL_presult__isset __isset;
 
@@ -589,21 +659,21 @@ class RepositoryServiceClient : virtual public RepositoryServiceIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  bool userLogin(const std::string& repo_name, const std::string& username, const std::string& password);
+  void userLogin(const std::string& repo_name, const std::string& username, const std::string& password);
   void send_userLogin(const std::string& repo_name, const std::string& username, const std::string& password);
-  bool recv_userLogin();
+  void recv_userLogin();
   int8_t getUserPermissionMask();
   void send_getUserPermissionMask();
   int8_t recv_getUserPermissionMask();
   void addTextData(UUID& _return, const std::string& content, const std::string& categories, const int32_t default_expire_time);
   void send_addTextData(const std::string& content, const std::string& categories, const int32_t default_expire_time);
   void recv_addTextData(UUID& _return);
-  bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content);
+  void modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content);
   void send_modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content);
-  bool recv_modifyTextData();
-  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id);
+  void recv_modifyTextData();
+  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id);
   void send_getTextURL(const std::string& repo_name, const UUID& instance_id);
-  void recv_getTextURL(URL_Response& _return);
+  void recv_getTextURL(URL& _return);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -648,14 +718,10 @@ class RepositoryServiceMultiface : virtual public RepositoryServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  bool userLogin(const std::string& repo_name, const std::string& username, const std::string& password) {
+  void userLogin(const std::string& repo_name, const std::string& username, const std::string& password) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
-      if (i == sz - 1) {
-        return ifaces_[i]->userLogin(repo_name, username, password);
-      } else {
-        ifaces_[i]->userLogin(repo_name, username, password);
-      }
+      ifaces_[i]->userLogin(repo_name, username, password);
     }
   }
 
@@ -682,18 +748,14 @@ class RepositoryServiceMultiface : virtual public RepositoryServiceIf {
     }
   }
 
-  bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) {
+  void modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
-      if (i == sz - 1) {
-        return ifaces_[i]->modifyTextData(repo_name, instance_id, new_content);
-      } else {
-        ifaces_[i]->modifyTextData(repo_name, instance_id, new_content);
-      }
+      ifaces_[i]->modifyTextData(repo_name, instance_id, new_content);
     }
   }
 
-  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) {
+  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {

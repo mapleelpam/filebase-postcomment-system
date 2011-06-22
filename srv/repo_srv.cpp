@@ -6,7 +6,8 @@
 #include <server/TSimpleServer.h>
 #include <transport/TServerSocket.h>
 #include <transport/TBufferTransports.h>
-#include <iostream>
+
+#include "error.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -16,58 +17,71 @@ using namespace ::apache::thrift::server;
 using boost::shared_ptr;
 
 using namespace tw::maple::generated;
+using namespace tw::test;
+
+GlobalManager *gmanager;
 
 class RepositoryServiceHandler : virtual public RepositoryServiceIf {
- public:
-  RepositoryServiceHandler() {
-    // Your initialization goes here
-  }
+public:
+    RepositoryServiceHandler() {
+        // Your initialization goes here
+    }
 
-  bool userLogin(const std::string& repo_name, const std::string& username, const std::string& password) {
-    // Your implementation goes here
-    printf("userLing\n");
-    std::cout << " hey , user:"<<username<<" try to login repository '"<<repo_name<<"'"<<std::endl;
-    return true;
-  }
+    void userLogin(const std::string& repo_name, const std::string& username, const std::string& password) {
+        // Your implementation goes here
+        printf("userLogin\n");
+        shared_ptr<Account> account = g_manager->accountAPI();
 
-  int8_t getUserPermissionMask() {
-    // Your implementation goes here
-    printf("getUserPermissionMask\n");
-    return 0;
-  }
+        ErrorCode rc = account->checkUser(username, password);
 
-  void addTextData(UUID& _return, const std::string& content, const std::string& categories, const int32_t default_expire_time) {
-    // Your implementation goes here
-    printf("addTextData\n");
-    return;
-  }
+        if(rc != SUCCESS) {
+            AuthenticationException authenx;
 
-  bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) {
-    // Your implementation goes here
-    printf("modifyTextData\n");
-    return true;
-  }
+            authenx.why = "login fail";
+            throw authenx;
+        }
+        rc = account->checkRepo(repo_name);
+        if(rc != SUCCESS) {
+            NotFoundException ne;
 
-  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) {
-    // Your implementation goes here
-    printf("getTextURL\n");
-    _return.address = "fuck";
-    _return.error = tw::maple::generated::ErrorCode::SUCCESS;
-    return;
-  }
+            throw ne;
+        }
+    }
+
+    int8_t getUserPermissionMask() {
+        // Your implementation goes here
+        printf("getUserPermissionMask\n");
+    }
+
+    void addTextData(UUID& _return, const std::string& content, const std::string& categories, const int32_t default_expire_time) {
+        // Your implementation goes here
+        printf("addTextData\n");
+    }
+
+    void modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) {
+        // Your implementation goes here
+        printf("modifyTextData\n");
+    }
+
+    void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) {
+        // Your implementation goes here
+        printf("getTextURL\n");
+    }
 
 };
 
 int main(int argc, char **argv) {
-  int port = 9090;
-  shared_ptr<RepositoryServiceHandler> handler(new RepositoryServiceHandler());
-  shared_ptr<TProcessor> processor(new RepositoryServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+    int port = 9090;
+    shared_ptr<RepositoryServiceHandler> handler(new RepositoryServiceHandler());
+    shared_ptr<TProcessor> processor(new RepositoryServiceProcessor(handler));
+    shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+    shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+    shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
-  TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
-  server.serve();
-  return 0;
+    TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+
+    gmanager = new GlobalManager();
+    server.serve();
+    return 0;
 }
 

@@ -15,17 +15,6 @@
 
 namespace tw { namespace maple { namespace generated {
 
-struct ErrorCode {
-  enum type {
-    SUCCESS = 0,
-    LOGIN_FAIL = 1,
-    CANT_FOUND_REPO = 2,
-    CANT_FOUND_UUID = 3
-  };
-};
-
-extern const std::map<int, const char*> _ErrorCode_VALUES_TO_NAMES;
-
 struct DataFormat {
   enum type {
     TEXT = 0,
@@ -41,41 +30,177 @@ typedef std::string UUID;
 
 typedef std::string URL;
 
-typedef struct _URL_Response__isset {
-  _URL_Response__isset() : address(false), error(false) {}
-  bool address;
-  bool error;
-} _URL_Response__isset;
 
-class URL_Response {
+class NotFoundException : public ::apache::thrift::TException {
  public:
 
-  static const char* ascii_fingerprint; // = "D6FD826D949221396F4FFC3ECCD3D192";
-  static const uint8_t binary_fingerprint[16]; // = {0xD6,0xFD,0x82,0x6D,0x94,0x92,0x21,0x39,0x6F,0x4F,0xFC,0x3E,0xCC,0xD3,0xD1,0x92};
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
 
-  URL_Response() : address("") {
+  NotFoundException() {
   }
 
-  virtual ~URL_Response() throw() {}
+  virtual ~NotFoundException() throw() {}
 
-  URL address;
-  ErrorCode::type error;
 
-  _URL_Response__isset __isset;
-
-  bool operator == (const URL_Response & rhs) const
+  bool operator == (const NotFoundException & /* rhs */) const
   {
-    if (!(address == rhs.address))
-      return false;
-    if (!(error == rhs.error))
-      return false;
     return true;
   }
-  bool operator != (const URL_Response &rhs) const {
+  bool operator != (const NotFoundException &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const URL_Response & ) const;
+  bool operator < (const NotFoundException & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class InvalidRequestException : public ::apache::thrift::TException {
+ public:
+
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+
+  InvalidRequestException() : why("") {
+  }
+
+  virtual ~InvalidRequestException() throw() {}
+
+  std::string why;
+
+  bool operator == (const InvalidRequestException & rhs) const
+  {
+    if (!(why == rhs.why))
+      return false;
+    return true;
+  }
+  bool operator != (const InvalidRequestException &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const InvalidRequestException & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class UnavailableException : public ::apache::thrift::TException {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  UnavailableException() {
+  }
+
+  virtual ~UnavailableException() throw() {}
+
+
+  bool operator == (const UnavailableException & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const UnavailableException &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const UnavailableException & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class TimedOutException : public ::apache::thrift::TException {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  TimedOutException() {
+  }
+
+  virtual ~TimedOutException() throw() {}
+
+
+  bool operator == (const TimedOutException & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const TimedOutException &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TimedOutException & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AuthenticationException : public ::apache::thrift::TException {
+ public:
+
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+
+  AuthenticationException() : why("") {
+  }
+
+  virtual ~AuthenticationException() throw() {}
+
+  std::string why;
+
+  bool operator == (const AuthenticationException & rhs) const
+  {
+    if (!(why == rhs.why))
+      return false;
+    return true;
+  }
+  bool operator != (const AuthenticationException &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AuthenticationException & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class AuthorizationException : public ::apache::thrift::TException {
+ public:
+
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+
+  AuthorizationException() : why("") {
+  }
+
+  virtual ~AuthorizationException() throw() {}
+
+  std::string why;
+
+  bool operator == (const AuthorizationException & rhs) const
+  {
+    if (!(why == rhs.why))
+      return false;
+    return true;
+  }
+  bool operator != (const AuthorizationException &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AuthorizationException & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;

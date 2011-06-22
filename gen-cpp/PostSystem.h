@@ -14,10 +14,10 @@ namespace tw { namespace maple { namespace generated {
 class PostSystemIf {
  public:
   virtual ~PostSystemIf() {}
-  virtual void newPost(UUID& _return, const std::string& user, const std::string& content) = 0;
-  virtual bool deletePost(const UUID& post_id) = 0;
-  virtual void newComment(UUID& _return, const UUID& post_id, const std::string& comment) = 0;
-  virtual bool rmComment(const UUID& post_id, const UUID& comment) = 0;
+  virtual void newPost(UUIDResponse& _return, const std::string& user, const std::string& content) = 0;
+  virtual ErrorCode::type deletePost(const UUID& post_id) = 0;
+  virtual void newComment(UUIDResponse& _return, const UUID& post_id, const std::string& comment) = 0;
+  virtual ErrorCode::type rmComment(const UUID& post_id, const UUID& comment) = 0;
   virtual void getContent(std::string& _return, const UUID& post_id) = 0;
   virtual void ping() = 0;
 };
@@ -25,18 +25,18 @@ class PostSystemIf {
 class PostSystemNull : virtual public PostSystemIf {
  public:
   virtual ~PostSystemNull() {}
-  void newPost(UUID& /* _return */, const std::string& /* user */, const std::string& /* content */) {
+  void newPost(UUIDResponse& /* _return */, const std::string& /* user */, const std::string& /* content */) {
     return;
   }
-  bool deletePost(const UUID& /* post_id */) {
-    bool _return = false;
+  ErrorCode::type deletePost(const UUID& /* post_id */) {
+    ErrorCode::type _return = (ErrorCode::type)0;
     return _return;
   }
-  void newComment(UUID& /* _return */, const UUID& /* post_id */, const std::string& /* comment */) {
+  void newComment(UUIDResponse& /* _return */, const UUID& /* post_id */, const std::string& /* comment */) {
     return;
   }
-  bool rmComment(const UUID& /* post_id */, const UUID& /* comment */) {
-    bool _return = false;
+  ErrorCode::type rmComment(const UUID& /* post_id */, const UUID& /* comment */) {
+    ErrorCode::type _return = (ErrorCode::type)0;
     return _return;
   }
   void getContent(std::string& /* _return */, const UUID& /* post_id */) {
@@ -107,12 +107,12 @@ typedef struct _PostSystem_newPost_result__isset {
 class PostSystem_newPost_result {
  public:
 
-  PostSystem_newPost_result() : success("") {
+  PostSystem_newPost_result() {
   }
 
   virtual ~PostSystem_newPost_result() throw() {}
 
-  UUID success;
+  UUIDResponse success;
 
   _PostSystem_newPost_result__isset __isset;
 
@@ -144,7 +144,7 @@ class PostSystem_newPost_presult {
 
   virtual ~PostSystem_newPost_presult() throw() {}
 
-  UUID* success;
+  UUIDResponse* success;
 
   _PostSystem_newPost_presult__isset __isset;
 
@@ -207,12 +207,12 @@ typedef struct _PostSystem_deletePost_result__isset {
 class PostSystem_deletePost_result {
  public:
 
-  PostSystem_deletePost_result() : success(0) {
+  PostSystem_deletePost_result() {
   }
 
   virtual ~PostSystem_deletePost_result() throw() {}
 
-  bool success;
+  ErrorCode::type success;
 
   _PostSystem_deletePost_result__isset __isset;
 
@@ -244,7 +244,7 @@ class PostSystem_deletePost_presult {
 
   virtual ~PostSystem_deletePost_presult() throw() {}
 
-  bool* success;
+  ErrorCode::type* success;
 
   _PostSystem_deletePost_presult__isset __isset;
 
@@ -312,12 +312,12 @@ typedef struct _PostSystem_newComment_result__isset {
 class PostSystem_newComment_result {
  public:
 
-  PostSystem_newComment_result() : success("") {
+  PostSystem_newComment_result() {
   }
 
   virtual ~PostSystem_newComment_result() throw() {}
 
-  UUID success;
+  UUIDResponse success;
 
   _PostSystem_newComment_result__isset __isset;
 
@@ -349,7 +349,7 @@ class PostSystem_newComment_presult {
 
   virtual ~PostSystem_newComment_presult() throw() {}
 
-  UUID* success;
+  UUIDResponse* success;
 
   _PostSystem_newComment_presult__isset __isset;
 
@@ -417,12 +417,12 @@ typedef struct _PostSystem_rmComment_result__isset {
 class PostSystem_rmComment_result {
  public:
 
-  PostSystem_rmComment_result() : success(0) {
+  PostSystem_rmComment_result() {
   }
 
   virtual ~PostSystem_rmComment_result() throw() {}
 
-  bool success;
+  ErrorCode::type success;
 
   _PostSystem_rmComment_result__isset __isset;
 
@@ -454,7 +454,7 @@ class PostSystem_rmComment_presult {
 
   virtual ~PostSystem_rmComment_presult() throw() {}
 
-  bool* success;
+  ErrorCode::type* success;
 
   _PostSystem_rmComment_presult__isset __isset;
 
@@ -656,18 +656,18 @@ class PostSystemClient : virtual public PostSystemIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void newPost(UUID& _return, const std::string& user, const std::string& content);
+  void newPost(UUIDResponse& _return, const std::string& user, const std::string& content);
   void send_newPost(const std::string& user, const std::string& content);
-  void recv_newPost(UUID& _return);
-  bool deletePost(const UUID& post_id);
+  void recv_newPost(UUIDResponse& _return);
+  ErrorCode::type deletePost(const UUID& post_id);
   void send_deletePost(const UUID& post_id);
-  bool recv_deletePost();
-  void newComment(UUID& _return, const UUID& post_id, const std::string& comment);
+  ErrorCode::type recv_deletePost();
+  void newComment(UUIDResponse& _return, const UUID& post_id, const std::string& comment);
   void send_newComment(const UUID& post_id, const std::string& comment);
-  void recv_newComment(UUID& _return);
-  bool rmComment(const UUID& post_id, const UUID& comment);
+  void recv_newComment(UUIDResponse& _return);
+  ErrorCode::type rmComment(const UUID& post_id, const UUID& comment);
   void send_rmComment(const UUID& post_id, const UUID& comment);
-  bool recv_rmComment();
+  ErrorCode::type recv_rmComment();
   void getContent(std::string& _return, const UUID& post_id);
   void send_getContent(const UUID& post_id);
   void recv_getContent(std::string& _return);
@@ -720,7 +720,7 @@ class PostSystemMultiface : virtual public PostSystemIf {
     ifaces_.push_back(iface);
   }
  public:
-  void newPost(UUID& _return, const std::string& user, const std::string& content) {
+  void newPost(UUIDResponse& _return, const std::string& user, const std::string& content) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
@@ -732,7 +732,7 @@ class PostSystemMultiface : virtual public PostSystemIf {
     }
   }
 
-  bool deletePost(const UUID& post_id) {
+  ErrorCode::type deletePost(const UUID& post_id) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
@@ -743,7 +743,7 @@ class PostSystemMultiface : virtual public PostSystemIf {
     }
   }
 
-  void newComment(UUID& _return, const UUID& post_id, const std::string& comment) {
+  void newComment(UUIDResponse& _return, const UUID& post_id, const std::string& comment) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
@@ -755,7 +755,7 @@ class PostSystemMultiface : virtual public PostSystemIf {
     }
   }
 
-  bool rmComment(const UUID& post_id, const UUID& comment) {
+  ErrorCode::type rmComment(const UUID& post_id, const UUID& comment) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {

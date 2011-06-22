@@ -104,8 +104,8 @@ uint32_t PostSystem_newPost_result::read(::apache::thrift::protocol::TProtocol* 
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->success);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->success.read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -130,8 +130,8 @@ uint32_t PostSystem_newPost_result::write(::apache::thrift::protocol::TProtocol*
   xfer += oprot->writeStructBegin("PostSystem_newPost_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
-    xfer += oprot->writeString(this->success);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
+    xfer += this->success.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -160,8 +160,8 @@ uint32_t PostSystem_newPost_presult::read(::apache::thrift::protocol::TProtocol*
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString((*(this->success)));
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += (*(this->success)).read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -262,8 +262,10 @@ uint32_t PostSystem_deletePost_result::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->success);
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast2;
+          xfer += iprot->readI32(ecast2);
+          this->success = (ErrorCode::type)ecast2;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -288,8 +290,8 @@ uint32_t PostSystem_deletePost_result::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeStructBegin("PostSystem_deletePost_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
-    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32((int32_t)this->success);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -318,8 +320,10 @@ uint32_t PostSystem_deletePost_presult::read(::apache::thrift::protocol::TProtoc
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool((*(this->success)));
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast3;
+          xfer += iprot->readI32(ecast3);
+          (*(this->success)) = (ErrorCode::type)ecast3;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -434,8 +438,8 @@ uint32_t PostSystem_newComment_result::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->success);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->success.read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -460,8 +464,8 @@ uint32_t PostSystem_newComment_result::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeStructBegin("PostSystem_newComment_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
-    xfer += oprot->writeString(this->success);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
+    xfer += this->success.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -490,8 +494,8 @@ uint32_t PostSystem_newComment_presult::read(::apache::thrift::protocol::TProtoc
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString((*(this->success)));
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += (*(this->success)).read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -606,8 +610,10 @@ uint32_t PostSystem_rmComment_result::read(::apache::thrift::protocol::TProtocol
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->success);
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast4;
+          xfer += iprot->readI32(ecast4);
+          this->success = (ErrorCode::type)ecast4;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -632,8 +638,8 @@ uint32_t PostSystem_rmComment_result::write(::apache::thrift::protocol::TProtoco
   xfer += oprot->writeStructBegin("PostSystem_rmComment_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
-    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32((int32_t)this->success);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -662,8 +668,10 @@ uint32_t PostSystem_rmComment_presult::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool((*(this->success)));
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast5;
+          xfer += iprot->readI32(ecast5);
+          (*(this->success)) = (ErrorCode::type)ecast5;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -962,7 +970,7 @@ uint32_t PostSystem_ping_presult::read(::apache::thrift::protocol::TProtocol* ip
   return xfer;
 }
 
-void PostSystemClient::newPost(UUID& _return, const std::string& user, const std::string& content)
+void PostSystemClient::newPost(UUIDResponse& _return, const std::string& user, const std::string& content)
 {
   send_newPost(user, content);
   recv_newPost(_return);
@@ -983,7 +991,7 @@ void PostSystemClient::send_newPost(const std::string& user, const std::string& 
   oprot_->getTransport()->flush();
 }
 
-void PostSystemClient::recv_newPost(UUID& _return)
+void PostSystemClient::recv_newPost(UUIDResponse& _return)
 {
 
   int32_t rseqid = 0;
@@ -1021,7 +1029,7 @@ void PostSystemClient::recv_newPost(UUID& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "newPost failed: unknown result");
 }
 
-bool PostSystemClient::deletePost(const UUID& post_id)
+ErrorCode::type PostSystemClient::deletePost(const UUID& post_id)
 {
   send_deletePost(post_id);
   return recv_deletePost();
@@ -1041,7 +1049,7 @@ void PostSystemClient::send_deletePost(const UUID& post_id)
   oprot_->getTransport()->flush();
 }
 
-bool PostSystemClient::recv_deletePost()
+ErrorCode::type PostSystemClient::recv_deletePost()
 {
 
   int32_t rseqid = 0;
@@ -1066,7 +1074,7 @@ bool PostSystemClient::recv_deletePost()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  bool _return;
+  ErrorCode::type _return;
   PostSystem_deletePost_presult result;
   result.success = &_return;
   result.read(iprot_);
@@ -1079,7 +1087,7 @@ bool PostSystemClient::recv_deletePost()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "deletePost failed: unknown result");
 }
 
-void PostSystemClient::newComment(UUID& _return, const UUID& post_id, const std::string& comment)
+void PostSystemClient::newComment(UUIDResponse& _return, const UUID& post_id, const std::string& comment)
 {
   send_newComment(post_id, comment);
   recv_newComment(_return);
@@ -1100,7 +1108,7 @@ void PostSystemClient::send_newComment(const UUID& post_id, const std::string& c
   oprot_->getTransport()->flush();
 }
 
-void PostSystemClient::recv_newComment(UUID& _return)
+void PostSystemClient::recv_newComment(UUIDResponse& _return)
 {
 
   int32_t rseqid = 0;
@@ -1138,7 +1146,7 @@ void PostSystemClient::recv_newComment(UUID& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "newComment failed: unknown result");
 }
 
-bool PostSystemClient::rmComment(const UUID& post_id, const UUID& comment)
+ErrorCode::type PostSystemClient::rmComment(const UUID& post_id, const UUID& comment)
 {
   send_rmComment(post_id, comment);
   return recv_rmComment();
@@ -1159,7 +1167,7 @@ void PostSystemClient::send_rmComment(const UUID& post_id, const UUID& comment)
   oprot_->getTransport()->flush();
 }
 
-bool PostSystemClient::recv_rmComment()
+ErrorCode::type PostSystemClient::recv_rmComment()
 {
 
   int32_t rseqid = 0;
@@ -1184,7 +1192,7 @@ bool PostSystemClient::recv_rmComment()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  bool _return;
+  ErrorCode::type _return;
   PostSystem_rmComment_presult result;
   result.success = &_return;
   result.read(iprot_);

@@ -117,10 +117,18 @@ uint32_t RepositoryService_userLogin_result::read(::apache::thrift::protocol::TP
     }
     switch (fid)
     {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->success);
-          this->__isset.success = true;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ire.read(iprot);
+          this->__isset.ire = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -143,9 +151,13 @@ uint32_t RepositoryService_userLogin_result::write(::apache::thrift::protocol::T
 
   xfer += oprot->writeStructBegin("RepositoryService_userLogin_result");
 
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
-    xfer += oprot->writeBool(this->success);
+  if (this->__isset.ire) {
+    xfer += oprot->writeFieldBegin("ire", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->ire.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.ue) {
+    xfer += oprot->writeFieldBegin("ue", ::apache::thrift::protocol::T_STRUCT, 2);
+    xfer += this->ue.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -173,10 +185,18 @@ uint32_t RepositoryService_userLogin_presult::read(::apache::thrift::protocol::T
     }
     switch (fid)
     {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool((*(this->success)));
-          this->__isset.success = true;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ire.read(iprot);
+          this->__isset.ire = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -269,6 +289,14 @@ uint32_t RepositoryService_getUserPermissionMask_result::read(::apache::thrift::
           xfer += iprot->skip(ftype);
         }
         break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -290,6 +318,10 @@ uint32_t RepositoryService_getUserPermissionMask_result::write(::apache::thrift:
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BYTE, 0);
     xfer += oprot->writeByte(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.authnx) {
+    xfer += oprot->writeFieldBegin("authnx", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->authnx.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -321,6 +353,14 @@ uint32_t RepositoryService_getUserPermissionMask_presult::read(::apache::thrift:
         if (ftype == ::apache::thrift::protocol::T_BYTE) {
           xfer += iprot->readByte((*(this->success)));
           this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -455,6 +495,30 @@ uint32_t RepositoryService_addTextData_result::read(::apache::thrift::protocol::
           xfer += iprot->skip(ftype);
         }
         break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->te.read(iprot);
+          this->__isset.te = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -476,6 +540,18 @@ uint32_t RepositoryService_addTextData_result::write(::apache::thrift::protocol:
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
     xfer += oprot->writeString(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.authnx) {
+    xfer += oprot->writeFieldBegin("authnx", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->authnx.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.ue) {
+    xfer += oprot->writeFieldBegin("ue", ::apache::thrift::protocol::T_STRUCT, 2);
+    xfer += this->ue.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.te) {
+    xfer += oprot->writeFieldBegin("te", ::apache::thrift::protocol::T_STRUCT, 3);
+    xfer += this->te.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -507,6 +583,30 @@ uint32_t RepositoryService_addTextData_presult::read(::apache::thrift::protocol:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString((*(this->success)));
           this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->te.read(iprot);
+          this->__isset.te = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -633,10 +733,34 @@ uint32_t RepositoryService_modifyTextData_result::read(::apache::thrift::protoco
     }
     switch (fid)
     {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->success);
-          this->__isset.success = true;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->nfe.read(iprot);
+          this->__isset.nfe = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->te.read(iprot);
+          this->__isset.te = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -659,9 +783,21 @@ uint32_t RepositoryService_modifyTextData_result::write(::apache::thrift::protoc
 
   xfer += oprot->writeStructBegin("RepositoryService_modifyTextData_result");
 
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
-    xfer += oprot->writeBool(this->success);
+  if (this->__isset.authnx) {
+    xfer += oprot->writeFieldBegin("authnx", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->authnx.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.nfe) {
+    xfer += oprot->writeFieldBegin("nfe", ::apache::thrift::protocol::T_STRUCT, 2);
+    xfer += this->nfe.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.ue) {
+    xfer += oprot->writeFieldBegin("ue", ::apache::thrift::protocol::T_STRUCT, 3);
+    xfer += this->ue.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.te) {
+    xfer += oprot->writeFieldBegin("te", ::apache::thrift::protocol::T_STRUCT, 4);
+    xfer += this->te.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -689,10 +825,34 @@ uint32_t RepositoryService_modifyTextData_presult::read(::apache::thrift::protoc
     }
     switch (fid)
     {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool((*(this->success)));
-          this->__isset.success = true;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->nfe.read(iprot);
+          this->__isset.nfe = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->te.read(iprot);
+          this->__isset.te = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -806,9 +966,41 @@ uint32_t RepositoryService_getTextURL_result::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->success.read(iprot);
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->success);
           this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ne.read(iprot);
+          this->__isset.ne = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->te.read(iprot);
+          this->__isset.te = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -832,8 +1024,24 @@ uint32_t RepositoryService_getTextURL_result::write(::apache::thrift::protocol::
   xfer += oprot->writeStructBegin("RepositoryService_getTextURL_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
-    xfer += this->success.write(oprot);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
+    xfer += oprot->writeString(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.authnx) {
+    xfer += oprot->writeFieldBegin("authnx", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->authnx.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.ne) {
+    xfer += oprot->writeFieldBegin("ne", ::apache::thrift::protocol::T_STRUCT, 2);
+    xfer += this->ne.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.ue) {
+    xfer += oprot->writeFieldBegin("ue", ::apache::thrift::protocol::T_STRUCT, 3);
+    xfer += this->ue.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.te) {
+    xfer += oprot->writeFieldBegin("te", ::apache::thrift::protocol::T_STRUCT, 4);
+    xfer += this->te.write(oprot);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -862,9 +1070,41 @@ uint32_t RepositoryService_getTextURL_presult::read(::apache::thrift::protocol::
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += (*(this->success)).read(iprot);
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString((*(this->success)));
           this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->authnx.read(iprot);
+          this->__isset.authnx = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ne.read(iprot);
+          this->__isset.ne = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ue.read(iprot);
+          this->__isset.ue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->te.read(iprot);
+          this->__isset.te = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -881,10 +1121,10 @@ uint32_t RepositoryService_getTextURL_presult::read(::apache::thrift::protocol::
   return xfer;
 }
 
-bool RepositoryServiceClient::userLogin(const std::string& repo_name, const std::string& username, const std::string& password)
+void RepositoryServiceClient::userLogin(const std::string& repo_name, const std::string& username, const std::string& password)
 {
   send_userLogin(repo_name, username, password);
-  return recv_userLogin();
+  recv_userLogin();
 }
 
 void RepositoryServiceClient::send_userLogin(const std::string& repo_name, const std::string& username, const std::string& password)
@@ -903,7 +1143,7 @@ void RepositoryServiceClient::send_userLogin(const std::string& repo_name, const
   oprot_->getTransport()->flush();
 }
 
-bool RepositoryServiceClient::recv_userLogin()
+void RepositoryServiceClient::recv_userLogin()
 {
 
   int32_t rseqid = 0;
@@ -928,17 +1168,18 @@ bool RepositoryServiceClient::recv_userLogin()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  bool _return;
   RepositoryService_userLogin_presult result;
-  result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  if (result.__isset.success) {
-    return _return;
+  if (result.__isset.ire) {
+    throw result.ire;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "userLogin failed: unknown result");
+  if (result.__isset.ue) {
+    throw result.ue;
+  }
+  return;
 }
 
 int8_t RepositoryServiceClient::getUserPermissionMask()
@@ -994,6 +1235,9 @@ int8_t RepositoryServiceClient::recv_getUserPermissionMask()
 
   if (result.__isset.success) {
     return _return;
+  }
+  if (result.__isset.authnx) {
+    throw result.authnx;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getUserPermissionMask failed: unknown result");
 }
@@ -1055,13 +1299,22 @@ void RepositoryServiceClient::recv_addTextData(UUID& _return)
     // _return pointer has now been filled
     return;
   }
+  if (result.__isset.authnx) {
+    throw result.authnx;
+  }
+  if (result.__isset.ue) {
+    throw result.ue;
+  }
+  if (result.__isset.te) {
+    throw result.te;
+  }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "addTextData failed: unknown result");
 }
 
-bool RepositoryServiceClient::modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content)
+void RepositoryServiceClient::modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content)
 {
   send_modifyTextData(repo_name, instance_id, new_content);
-  return recv_modifyTextData();
+  recv_modifyTextData();
 }
 
 void RepositoryServiceClient::send_modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content)
@@ -1080,7 +1333,7 @@ void RepositoryServiceClient::send_modifyTextData(const std::string& repo_name, 
   oprot_->getTransport()->flush();
 }
 
-bool RepositoryServiceClient::recv_modifyTextData()
+void RepositoryServiceClient::recv_modifyTextData()
 {
 
   int32_t rseqid = 0;
@@ -1105,20 +1358,27 @@ bool RepositoryServiceClient::recv_modifyTextData()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  bool _return;
   RepositoryService_modifyTextData_presult result;
-  result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  if (result.__isset.success) {
-    return _return;
+  if (result.__isset.authnx) {
+    throw result.authnx;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "modifyTextData failed: unknown result");
+  if (result.__isset.nfe) {
+    throw result.nfe;
+  }
+  if (result.__isset.ue) {
+    throw result.ue;
+  }
+  if (result.__isset.te) {
+    throw result.te;
+  }
+  return;
 }
 
-void RepositoryServiceClient::getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id)
+void RepositoryServiceClient::getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id)
 {
   send_getTextURL(repo_name, instance_id);
   recv_getTextURL(_return);
@@ -1139,7 +1399,7 @@ void RepositoryServiceClient::send_getTextURL(const std::string& repo_name, cons
   oprot_->getTransport()->flush();
 }
 
-void RepositoryServiceClient::recv_getTextURL(URL_Response& _return)
+void RepositoryServiceClient::recv_getTextURL(URL& _return)
 {
 
   int32_t rseqid = 0;
@@ -1173,6 +1433,18 @@ void RepositoryServiceClient::recv_getTextURL(URL_Response& _return)
   if (result.__isset.success) {
     // _return pointer has now been filled
     return;
+  }
+  if (result.__isset.authnx) {
+    throw result.authnx;
+  }
+  if (result.__isset.ne) {
+    throw result.ne;
+  }
+  if (result.__isset.ue) {
+    throw result.ue;
+  }
+  if (result.__isset.te) {
+    throw result.te;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getTextURL failed: unknown result");
 }
@@ -1245,8 +1517,13 @@ void RepositoryServiceProcessor::process_userLogin(int32_t seqid, ::apache::thri
 
   RepositoryService_userLogin_result result;
   try {
-    result.success = iface_->userLogin(args.repo_name, args.username, args.password);
-    result.__isset.success = true;
+    iface_->userLogin(args.repo_name, args.username, args.password);
+  } catch (AuthenticationException &ire) {
+    result.ire = ire;
+    result.__isset.ire = true;
+  } catch (UnavailableException &ue) {
+    result.ue = ue;
+    result.__isset.ue = true;
   } catch (const std::exception& e) {
     if (eventHandler_.get() != NULL) {
       eventHandler_->handlerError(ctx, "RepositoryService.userLogin");
@@ -1301,6 +1578,9 @@ void RepositoryServiceProcessor::process_getUserPermissionMask(int32_t seqid, ::
   try {
     result.success = iface_->getUserPermissionMask();
     result.__isset.success = true;
+  } catch (AuthenticationException &authnx) {
+    result.authnx = authnx;
+    result.__isset.authnx = true;
   } catch (const std::exception& e) {
     if (eventHandler_.get() != NULL) {
       eventHandler_->handlerError(ctx, "RepositoryService.getUserPermissionMask");
@@ -1355,6 +1635,15 @@ void RepositoryServiceProcessor::process_addTextData(int32_t seqid, ::apache::th
   try {
     iface_->addTextData(result.success, args.content, args.categories, args.default_expire_time);
     result.__isset.success = true;
+  } catch (AuthenticationException &authnx) {
+    result.authnx = authnx;
+    result.__isset.authnx = true;
+  } catch (UnavailableException &ue) {
+    result.ue = ue;
+    result.__isset.ue = true;
+  } catch (TimedOutException &te) {
+    result.te = te;
+    result.__isset.te = true;
   } catch (const std::exception& e) {
     if (eventHandler_.get() != NULL) {
       eventHandler_->handlerError(ctx, "RepositoryService.addTextData");
@@ -1407,8 +1696,19 @@ void RepositoryServiceProcessor::process_modifyTextData(int32_t seqid, ::apache:
 
   RepositoryService_modifyTextData_result result;
   try {
-    result.success = iface_->modifyTextData(args.repo_name, args.instance_id, args.new_content);
-    result.__isset.success = true;
+    iface_->modifyTextData(args.repo_name, args.instance_id, args.new_content);
+  } catch (AuthenticationException &authnx) {
+    result.authnx = authnx;
+    result.__isset.authnx = true;
+  } catch (NotFoundException &nfe) {
+    result.nfe = nfe;
+    result.__isset.nfe = true;
+  } catch (UnavailableException &ue) {
+    result.ue = ue;
+    result.__isset.ue = true;
+  } catch (TimedOutException &te) {
+    result.te = te;
+    result.__isset.te = true;
   } catch (const std::exception& e) {
     if (eventHandler_.get() != NULL) {
       eventHandler_->handlerError(ctx, "RepositoryService.modifyTextData");
@@ -1463,6 +1763,18 @@ void RepositoryServiceProcessor::process_getTextURL(int32_t seqid, ::apache::thr
   try {
     iface_->getTextURL(result.success, args.repo_name, args.instance_id);
     result.__isset.success = true;
+  } catch (AuthenticationException &authnx) {
+    result.authnx = authnx;
+    result.__isset.authnx = true;
+  } catch (NotFoundException &ne) {
+    result.ne = ne;
+    result.__isset.ne = true;
+  } catch (UnavailableException &ue) {
+    result.ue = ue;
+    result.__isset.ue = true;
+  } catch (TimedOutException &te) {
+    result.te = te;
+    result.__isset.te = true;
   } catch (const std::exception& e) {
     if (eventHandler_.get() != NULL) {
       eventHandler_->handlerError(ctx, "RepositoryService.getTextURL");

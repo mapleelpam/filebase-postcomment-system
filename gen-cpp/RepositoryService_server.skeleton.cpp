@@ -22,7 +22,7 @@ class RepositoryServiceHandler : virtual public RepositoryServiceIf {
     // Your initialization goes here
   }
 
-  bool userLogin(const std::string& repo_name, const std::string& username, const std::string& password) {
+  void userLogin(const std::string& repo_name, const std::string& username, const std::string& password) {
     // Your implementation goes here
     printf("userLogin\n");
   }
@@ -37,12 +37,12 @@ class RepositoryServiceHandler : virtual public RepositoryServiceIf {
     printf("addTextData\n");
   }
 
-  bool modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) {
+  void modifyTextData(const std::string& repo_name, const UUID& instance_id, const std::string& new_content) {
     // Your implementation goes here
     printf("modifyTextData\n");
   }
 
-  void getTextURL(URL_Response& _return, const std::string& repo_name, const UUID& instance_id) {
+  void getTextURL(URL& _return, const std::string& repo_name, const UUID& instance_id) {
     // Your implementation goes here
     printf("getTextURL\n");
   }
