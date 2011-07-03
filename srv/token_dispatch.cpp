@@ -95,7 +95,7 @@ std::string TokenManager::genURL(const std::string &token, const std::string &it
     return mHost + "/" + token + "-" + uuid;
 }
 
-ErrorCode TokenManager::checkExpireContext(void)
+int32_t TokenManager::checkExpireContext(void)
 {
     boost::lock_guard<boost::mutex> lock(this->mMutex);
 
@@ -103,8 +103,9 @@ ErrorCode TokenManager::checkExpireContext(void)
         TokenContextPtr context = mContextQueue.top();
         time_t now = time(NULL);
 
-        if(context->mExpireTime > now)
-            break;
+        if(context->mExpireTime > now) {
+            return context->mExpireTime - now;
+        }
 
         context->showInfo();
         std::map<std::string, TokenContextPtr>::iterator it = mContextDB.find(context->mKey);
@@ -113,7 +114,7 @@ ErrorCode TokenManager::checkExpireContext(void)
         else printf("not found\n");
         mContextQueue.pop();
     }
-    return SUCCESS;
+    return 0;
 }
 
 void TokenManager::showInfo(void)

@@ -27,10 +27,14 @@ struct cleanExpireContextThread
 {
     void operator()()
     {
+        int sleep_time = 3;
+
         while(1) {
-            boost::this_thread::sleep(boost::posix_time::seconds(3));
-            printf("clean context thread\n");
-            g_token_manager->checkExpireContext();
+            printf("clean context thread sleep_time = %d\n", sleep_time);
+            boost::this_thread::sleep(boost::posix_time::seconds(sleep_time));
+            int32_t next_sleep = g_token_manager->checkExpireContext();
+
+            sleep_time = (next_sleep > 0) ? next_sleep : 3;
         }
     };
 };

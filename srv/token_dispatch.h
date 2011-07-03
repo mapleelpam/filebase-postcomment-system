@@ -43,7 +43,7 @@ public:
     ErrorCode removeContext(const std::string &token);
     ErrorCode isTokenOK(const std::string &token);
     std::string genURL(const std::string &token, const std::string &itemKey);
-    ErrorCode checkExpireContext(void);
+    int32_t checkExpireContext(void);
     void showInfo(void);
 
 private:
