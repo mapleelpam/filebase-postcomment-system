@@ -6,27 +6,11 @@
 #include <sstream>
 #include <time.h>
 
-#include "token_dispatch.h"
+#include <service/token/tokenmanager.h>
 
-namespace tw { namespace test {
+namespace service { namespace token {
 
-TokenContext::TokenContext(const std::string &userId, const std::string &token, const int32_t expireTime)
-    : mUserId(userId), mToken(token), mExpireTime(expireTime)
-{
-    mKey = mUserId + '_' + mToken;
-}
-
-TokenContext::~TokenContext()
-{
-}
-
-void TokenContext::showInfo(void)
-{
-    printf("key: %s -> expireTime: %d, token: %s, userId: %s\n",
-            this->mKey.c_str(), this->mExpireTime, this->mToken.c_str(), this->mUserId.c_str());
-}
-
-bool operator<(const TokenContextPtr a, const TokenContextPtr b)
+bool operator<(const ContextPtr a, const ContextPtr b)
 {
     return a->mExpireTime >= b->mExpireTime;
 }
@@ -48,11 +32,11 @@ std::string TokenManager::genToken(void)
     return s.str();
 }
 
-ErrorCode TokenManager::insertToken(TokenContextPtr context)
+TokenManager::ErrorCode TokenManager::insertToken(ContextPtr context)
 {
     boost::lock_guard<boost::mutex> lock(this->mMutex);
 
-    mContextDB.insert(std::pair<std::string, TokenContextPtr >(context->mKey, context));
+    mContextDB.insert(std::pair<std::string, ContextPtr >(context->mKey, context));
     // only insert context which can expire
     mContextQueue.push(context);
 
@@ -65,10 +49,10 @@ ErrorCode TokenManager::insertToken(TokenContextPtr context)
     return SUCCESS;
 }
 
-ErrorCode TokenManager::removeToken(const std::string &token)
+TokenManager::ErrorCode TokenManager::removeToken(const std::string &token)
 {
     boost::lock_guard<boost::mutex> lock(this->mMutex);
-    std::map<std::string, TokenContextPtr>::iterator it = mContextDB.find(token);
+    std::map<std::string, ContextPtr>::iterator it = mContextDB.find(token);
 
     if(it != mContextDB.end()) {
         mContextDB.erase(it);
@@ -77,10 +61,10 @@ ErrorCode TokenManager::removeToken(const std::string &token)
     return CANT_FOUND_TOKEN;
 }
 
-ErrorCode TokenManager::isTokenOK(const std::string &token)
+TokenManager::ErrorCode TokenManager::isTokenOK(const std::string &token)
 {
     boost::lock_guard<boost::mutex> lock(this->mMutex);
-    std::map<std::string, TokenContextPtr>::iterator it = mContextDB.find(token);
+    std::map<std::string, ContextPtr>::iterator it = mContextDB.find(token);
 
     if(it == mContextDB.end())
         return CANT_FOUND_TOKEN;
@@ -107,7 +91,7 @@ std::string TokenManager::genURL(const std::string &token, const std::string &it
         return mHost + "/P" + token + "_" + uuid;
 }
 
-ErrorCode TokenManager::checkURL(const std::string &url)
+TokenManager::ErrorCode TokenManager::checkURL(const std::string &url)
 {
     size_t pos = url.rfind("/");
 
@@ -135,7 +119,7 @@ int32_t TokenManager::checkExpireContext(void)
     boost::lock_guard<boost::mutex> lock(this->mMutex);
 
     while(mContextQueue.size() > 0) {
-        TokenContextPtr context = mContextQueue.top();
+    	ContextPtr context = mContextQueue.top();
         time_t now = time(NULL);
 
         if(context->mExpireTime > now) {
@@ -143,7 +127,7 @@ int32_t TokenManager::checkExpireContext(void)
         }
 
         context->showInfo();
-        std::map<std::string, TokenContextPtr>::iterator it = mContextDB.find(context->mKey);
+        std::map<std::string, ContextPtr>::iterator it = mContextDB.find(context->mKey);
         if(it != mContextDB.end())
             mContextDB.erase(it);
         else printf("not found\n");
@@ -155,7 +139,7 @@ int32_t TokenManager::checkExpireContext(void)
 void TokenManager::showInfo(void)
 {
     printf("Show Map:\n");
-    for(std::map<std::string, TokenContextPtr >::iterator it=mContextDB.begin(); it !=mContextDB.end(); it++) {
+    for(std::map<std::string, ContextPtr >::iterator it=mContextDB.begin(), E=mContextDB.end(); it != E ; it++) {
         it->second->showInfo();
         /*
         printf("key: %s -> expireTime: %d, token: %s, userId: %s\n",
@@ -165,7 +149,7 @@ void TokenManager::showInfo(void)
 
     printf("Queue:\n");
     while(mContextQueue.size() > 0) {
-        TokenContextPtr context = mContextQueue.top();
+    	ContextPtr context = mContextQueue.top();
 
         context->showInfo();
         /*
@@ -175,4 +159,5 @@ void TokenManager::showInfo(void)
         mContextQueue.pop();
     }
 }
-}}
+
+} /*token*/ } /*service*/
