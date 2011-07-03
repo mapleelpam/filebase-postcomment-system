@@ -54,7 +54,10 @@ service TokenService
     void checkToken(1: string token)
         throws (1: NotFoundException nfe),
 
-    string getURL(1: string token, 2: string itemKey="")
+    string getURL(1: string token, 2: string itemKey="", 3: i32 default_expire_time)
+        throws (1: NotFoundException nfe),
+
+    void checkURL(1: string url)
         throws (1: NotFoundException nfe),
 }
 

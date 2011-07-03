@@ -49,10 +49,10 @@ public:
     void getToken(std::string& _return, const std::string& userId, const int32_t default_expire_time)
     {
         std::string token = g_token_manager->genToken();
-        std::string key = userId + "-" + token;
+        std::string key = userId + "_" + token;
         TokenContextPtr context(new TokenContext(userId, token, default_expire_time));
 
-        g_token_manager->insertContext(context);
+        g_token_manager->insertToken(context);
         _return = key;
 //        printf("expireTime: %d, token: %s, userId: %s\n", default_expire_time, token.c_str(), userId.c_str());
     }
@@ -60,7 +60,7 @@ public:
     void removeToken(const std::string& token)
     {
         printf("removeToken\n");
-        ErrorCode rc = g_token_manager->removeContext(token);
+        ErrorCode rc = g_token_manager->removeToken(token);
 
         if(rc == CANT_FOUND_TOKEN) {
             NotFoundException nfe;
@@ -83,12 +83,24 @@ public:
         }
     }
 
-    void getURL(std::string& _return, const std::string& token, const std::string& itemKey)
+    void getURL(std::string& _return, const std::string& token,
+            const std::string& itemKey, const int32_t expireTime)
     {
         printf("getURL\n");
         checkToken(token);
 
-        _return  = g_token_manager->genURL(token, itemKey);
+        _return  = g_token_manager->genURL(token, itemKey, expireTime);
+    }
+
+    void checkURL(const std::string &url)
+    {
+        printf("checkURL\n");
+        if(g_token_manager->checkURL(url) != SUCCESS) {
+            NotFoundException nfe;
+
+            nfe.why = "URL Not Exist";
+            throw nfe;
+        }
     }
 };
 

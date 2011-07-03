@@ -39,11 +39,12 @@ public:
     virtual ~TokenManager();
 
     std::string genToken();
-    ErrorCode insertContext(TokenContextPtr context);
-    ErrorCode removeContext(const std::string &token);
+    ErrorCode insertToken(TokenContextPtr context);
+    ErrorCode removeToken(const std::string &token);
     ErrorCode isTokenOK(const std::string &token);
-    std::string genURL(const std::string &token, const std::string &itemKey);
+    std::string genURL(const std::string &token, const std::string &itemKey, const int32_t expireTime=0);
     int32_t checkExpireContext(void);
+    ErrorCode checkURL(const std::string &url);
     void showInfo(void);
 
 private:

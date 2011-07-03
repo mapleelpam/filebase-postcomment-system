@@ -9,6 +9,8 @@ enum ErrorCode {
     LOGIN_FAIL,
     CANT_FOUND_REPO,
     CANT_FOUND_TOKEN,
+    URL_EXPIRE,
+    URL_FORMAT_ERROR,
 };
 
 }}

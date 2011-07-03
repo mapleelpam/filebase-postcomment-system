@@ -53,20 +53,24 @@ int main(int argc, char** argv)
             string ret;
 
             client.getToken(ret, t1, time(NULL) + i);
-            if(i == 3)
+            if(i == 3) {
                 token = ret;
+                printf("token: %s\n", token.c_str());
+            }
         }
-        string url;
-        client.getURL(url, token, "");
+        string url1, url2;
+        client.getURL(url1, token, "", 0);   // for persistent url
+        printf("url: %s\n", url1.c_str());
 
-        printf("url: %s\n", url.c_str());
-        client.getURL(url, token, "itemKey");
-        printf("url: %s\n", url.c_str());
+        client.getURL(url2, token, "itemKey", 1); // for expire url
+        printf("url: %s\n", url2.c_str());
 
         printf("removing token: %s\n", token.c_str());
         client.removeToken(token);
+        client.checkURL(url1);
+        client.checkURL(url2);
 
-        client.checkToken(token);
+//        client.checkToken(token);
 
         transport->close();
     } catch (tw::maple::generated::NotFoundException &nfe) {
