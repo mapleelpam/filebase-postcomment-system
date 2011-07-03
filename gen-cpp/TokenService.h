@@ -17,7 +17,8 @@ class TokenServiceIf {
   virtual void getToken(std::string& _return, const std::string& userId, const int32_t default_expire_time) = 0;
   virtual void removeToken(const std::string& token) = 0;
   virtual void checkToken(const std::string& token) = 0;
-  virtual void getURL(std::string& _return, const std::string& token, const std::string& itemKey) = 0;
+  virtual void getURL(std::string& _return, const std::string& token, const std::string& itemKey, const int32_t default_expire_time) = 0;
+  virtual void checkURL(const std::string& url) = 0;
 };
 
 class TokenServiceNull : virtual public TokenServiceIf {
@@ -32,7 +33,10 @@ class TokenServiceNull : virtual public TokenServiceIf {
   void checkToken(const std::string& /* token */) {
     return;
   }
-  void getURL(std::string& /* _return */, const std::string& /* token */, const std::string& /* itemKey */) {
+  void getURL(std::string& /* _return */, const std::string& /* token */, const std::string& /* itemKey */, const int32_t /* default_expire_time */) {
+    return;
+  }
+  void checkURL(const std::string& /* url */) {
     return;
   }
 };
@@ -343,21 +347,23 @@ class TokenService_checkToken_presult {
 };
 
 typedef struct _TokenService_getURL_args__isset {
-  _TokenService_getURL_args__isset() : token(false), itemKey(false) {}
+  _TokenService_getURL_args__isset() : token(false), itemKey(false), default_expire_time(false) {}
   bool token;
   bool itemKey;
+  bool default_expire_time;
 } _TokenService_getURL_args__isset;
 
 class TokenService_getURL_args {
  public:
 
-  TokenService_getURL_args() : token(""), itemKey("") {
+  TokenService_getURL_args() : token(""), itemKey(""), default_expire_time(0) {
   }
 
   virtual ~TokenService_getURL_args() throw() {}
 
   std::string token;
   std::string itemKey;
+  int32_t default_expire_time;
 
   _TokenService_getURL_args__isset __isset;
 
@@ -366,6 +372,8 @@ class TokenService_getURL_args {
     if (!(token == rhs.token))
       return false;
     if (!(itemKey == rhs.itemKey))
+      return false;
+    if (!(default_expire_time == rhs.default_expire_time))
       return false;
     return true;
   }
@@ -389,6 +397,7 @@ class TokenService_getURL_pargs {
 
   const std::string* token;
   const std::string* itemKey;
+  const int32_t* default_expire_time;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -453,6 +462,106 @@ class TokenService_getURL_presult {
 
 };
 
+typedef struct _TokenService_checkURL_args__isset {
+  _TokenService_checkURL_args__isset() : url(false) {}
+  bool url;
+} _TokenService_checkURL_args__isset;
+
+class TokenService_checkURL_args {
+ public:
+
+  TokenService_checkURL_args() : url("") {
+  }
+
+  virtual ~TokenService_checkURL_args() throw() {}
+
+  std::string url;
+
+  _TokenService_checkURL_args__isset __isset;
+
+  bool operator == (const TokenService_checkURL_args & rhs) const
+  {
+    if (!(url == rhs.url))
+      return false;
+    return true;
+  }
+  bool operator != (const TokenService_checkURL_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TokenService_checkURL_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class TokenService_checkURL_pargs {
+ public:
+
+
+  virtual ~TokenService_checkURL_pargs() throw() {}
+
+  const std::string* url;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _TokenService_checkURL_result__isset {
+  _TokenService_checkURL_result__isset() : nfe(false) {}
+  bool nfe;
+} _TokenService_checkURL_result__isset;
+
+class TokenService_checkURL_result {
+ public:
+
+  TokenService_checkURL_result() {
+  }
+
+  virtual ~TokenService_checkURL_result() throw() {}
+
+  NotFoundException nfe;
+
+  _TokenService_checkURL_result__isset __isset;
+
+  bool operator == (const TokenService_checkURL_result & rhs) const
+  {
+    if (!(nfe == rhs.nfe))
+      return false;
+    return true;
+  }
+  bool operator != (const TokenService_checkURL_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TokenService_checkURL_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _TokenService_checkURL_presult__isset {
+  _TokenService_checkURL_presult__isset() : nfe(false) {}
+  bool nfe;
+} _TokenService_checkURL_presult__isset;
+
+class TokenService_checkURL_presult {
+ public:
+
+
+  virtual ~TokenService_checkURL_presult() throw() {}
+
+  NotFoundException nfe;
+
+  _TokenService_checkURL_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class TokenServiceClient : virtual public TokenServiceIf {
  public:
   TokenServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -482,9 +591,12 @@ class TokenServiceClient : virtual public TokenServiceIf {
   void checkToken(const std::string& token);
   void send_checkToken(const std::string& token);
   void recv_checkToken();
-  void getURL(std::string& _return, const std::string& token, const std::string& itemKey);
-  void send_getURL(const std::string& token, const std::string& itemKey);
+  void getURL(std::string& _return, const std::string& token, const std::string& itemKey, const int32_t default_expire_time);
+  void send_getURL(const std::string& token, const std::string& itemKey, const int32_t default_expire_time);
   void recv_getURL(std::string& _return);
+  void checkURL(const std::string& url);
+  void send_checkURL(const std::string& url);
+  void recv_checkURL();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -502,6 +614,7 @@ class TokenServiceProcessor : virtual public ::apache::thrift::TProcessor {
   void process_removeToken(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_checkToken(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getURL(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_checkURL(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   TokenServiceProcessor(boost::shared_ptr<TokenServiceIf> iface) :
     iface_(iface) {
@@ -509,6 +622,7 @@ class TokenServiceProcessor : virtual public ::apache::thrift::TProcessor {
     processMap_["removeToken"] = &TokenServiceProcessor::process_removeToken;
     processMap_["checkToken"] = &TokenServiceProcessor::process_checkToken;
     processMap_["getURL"] = &TokenServiceProcessor::process_getURL;
+    processMap_["checkURL"] = &TokenServiceProcessor::process_checkURL;
   }
 
   virtual bool process(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot, boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot, void* callContext);
@@ -553,15 +667,22 @@ class TokenServiceMultiface : virtual public TokenServiceIf {
     }
   }
 
-  void getURL(std::string& _return, const std::string& token, const std::string& itemKey) {
+  void getURL(std::string& _return, const std::string& token, const std::string& itemKey, const int32_t default_expire_time) {
     uint32_t sz = ifaces_.size();
     for (uint32_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
-        ifaces_[i]->getURL(_return, token, itemKey);
+        ifaces_[i]->getURL(_return, token, itemKey, default_expire_time);
         return;
       } else {
-        ifaces_[i]->getURL(_return, token, itemKey);
+        ifaces_[i]->getURL(_return, token, itemKey, default_expire_time);
       }
+    }
+  }
+
+  void checkURL(const std::string& url) {
+    uint32_t sz = ifaces_.size();
+    for (uint32_t i = 0; i < sz; ++i) {
+      ifaces_[i]->checkURL(url);
     }
   }
 

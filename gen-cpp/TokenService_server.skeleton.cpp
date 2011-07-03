@@ -37,9 +37,14 @@ class TokenServiceHandler : virtual public TokenServiceIf {
     printf("checkToken\n");
   }
 
-  void getURL(std::string& _return, const std::string& token, const std::string& itemKey) {
+  void getURL(std::string& _return, const std::string& token, const std::string& itemKey, const int32_t default_expire_time) {
     // Your implementation goes here
     printf("getURL\n");
+  }
+
+  void checkURL(const std::string& url) {
+    // Your implementation goes here
+    printf("checkURL\n");
   }
 
 };

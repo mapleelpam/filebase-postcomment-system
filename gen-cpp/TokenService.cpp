@@ -531,6 +531,14 @@ uint32_t TokenService_getURL_args::read(::apache::thrift::protocol::TProtocol* i
           xfer += iprot->skip(ftype);
         }
         break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->default_expire_time);
+          this->__isset.default_expire_time = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -552,6 +560,9 @@ uint32_t TokenService_getURL_args::write(::apache::thrift::protocol::TProtocol* 
   xfer += oprot->writeFieldBegin("itemKey", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString(this->itemKey);
   xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeFieldBegin("default_expire_time", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->default_expire_time);
+  xfer += oprot->writeFieldEnd();
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -565,6 +576,9 @@ uint32_t TokenService_getURL_pargs::write(::apache::thrift::protocol::TProtocol*
   xfer += oprot->writeFieldEnd();
   xfer += oprot->writeFieldBegin("itemKey", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString((*(this->itemKey)));
+  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeFieldBegin("default_expire_time", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->default_expire_time)));
   xfer += oprot->writeFieldEnd();
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -667,6 +681,164 @@ uint32_t TokenService_getURL_presult::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->nfe.read(iprot);
+          this->__isset.nfe = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t TokenService_checkURL_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->url);
+          this->__isset.url = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t TokenService_checkURL_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("TokenService_checkURL_args");
+  xfer += oprot->writeFieldBegin("url", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->url);
+  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t TokenService_checkURL_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("TokenService_checkURL_pargs");
+  xfer += oprot->writeFieldBegin("url", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->url)));
+  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t TokenService_checkURL_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->nfe.read(iprot);
+          this->__isset.nfe = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t TokenService_checkURL_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("TokenService_checkURL_result");
+
+  if (this->__isset.nfe) {
+    xfer += oprot->writeFieldBegin("nfe", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->nfe.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t TokenService_checkURL_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_STRUCT) {
           xfer += this->nfe.read(iprot);
@@ -858,13 +1030,13 @@ void TokenServiceClient::recv_checkToken()
   return;
 }
 
-void TokenServiceClient::getURL(std::string& _return, const std::string& token, const std::string& itemKey)
+void TokenServiceClient::getURL(std::string& _return, const std::string& token, const std::string& itemKey, const int32_t default_expire_time)
 {
-  send_getURL(token, itemKey);
+  send_getURL(token, itemKey, default_expire_time);
   recv_getURL(_return);
 }
 
-void TokenServiceClient::send_getURL(const std::string& token, const std::string& itemKey)
+void TokenServiceClient::send_getURL(const std::string& token, const std::string& itemKey, const int32_t default_expire_time)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("getURL", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -872,6 +1044,7 @@ void TokenServiceClient::send_getURL(const std::string& token, const std::string
   TokenService_getURL_pargs args;
   args.token = &token;
   args.itemKey = &itemKey;
+  args.default_expire_time = &default_expire_time;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -918,6 +1091,62 @@ void TokenServiceClient::recv_getURL(std::string& _return)
     throw result.nfe;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getURL failed: unknown result");
+}
+
+void TokenServiceClient::checkURL(const std::string& url)
+{
+  send_checkURL(url);
+  recv_checkURL();
+}
+
+void TokenServiceClient::send_checkURL(const std::string& url)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("checkURL", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  TokenService_checkURL_pargs args;
+  args.url = &url;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+void TokenServiceClient::recv_checkURL()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("checkURL") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  TokenService_checkURL_presult result;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.nfe) {
+    throw result.nfe;
+  }
+  return;
 }
 
 bool TokenServiceProcessor::process(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot, boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot, void* callContext) {
@@ -1154,7 +1383,7 @@ void TokenServiceProcessor::process_getURL(int32_t seqid, ::apache::thrift::prot
 
   TokenService_getURL_result result;
   try {
-    iface_->getURL(result.success, args.token, args.itemKey);
+    iface_->getURL(result.success, args.token, args.itemKey, args.default_expire_time);
     result.__isset.success = true;
   } catch (NotFoundException &nfe) {
     result.nfe = nfe;
@@ -1185,6 +1414,62 @@ void TokenServiceProcessor::process_getURL(int32_t seqid, ::apache::thrift::prot
 
   if (eventHandler_.get() != NULL) {
     eventHandler_->postWrite(ctx, "TokenService.getURL", bytes);
+  }
+}
+
+void TokenServiceProcessor::process_checkURL(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (eventHandler_.get() != NULL) {
+    ctx = eventHandler_->getContext("TokenService.checkURL", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(eventHandler_.get(), ctx, "TokenService.checkURL");
+
+  if (eventHandler_.get() != NULL) {
+    eventHandler_->preRead(ctx, "TokenService.checkURL");
+  }
+
+  TokenService_checkURL_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (eventHandler_.get() != NULL) {
+    eventHandler_->postRead(ctx, "TokenService.checkURL", bytes);
+  }
+
+  TokenService_checkURL_result result;
+  try {
+    iface_->checkURL(args.url);
+  } catch (NotFoundException &nfe) {
+    result.nfe = nfe;
+    result.__isset.nfe = true;
+  } catch (const std::exception& e) {
+    if (eventHandler_.get() != NULL) {
+      eventHandler_->handlerError(ctx, "TokenService.checkURL");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("checkURL", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (eventHandler_.get() != NULL) {
+    eventHandler_->preWrite(ctx, "TokenService.checkURL");
+  }
+
+  oprot->writeMessageBegin("checkURL", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (eventHandler_.get() != NULL) {
+    eventHandler_->postWrite(ctx, "TokenService.checkURL", bytes);
   }
 }
 
