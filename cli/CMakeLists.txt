@@ -25,3 +25,4 @@ TARGET_LINK_LIBRARIES( fdbc
     )
 
 include( repo.cmake )
+include( token.cmake )

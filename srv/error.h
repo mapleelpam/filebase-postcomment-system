@@ -4,12 +4,12 @@
 
 namespace tw { namespace test {
 
-enum {
+enum ErrorCode {
     SUCCESS,
     LOGIN_FAIL,
     CANT_FOUND_REPO,
-    CANT_FOUND_UUID,
-} ErrorCode;
+    CANT_FOUND_TOKEN,
+};
 
 }}
 #endif

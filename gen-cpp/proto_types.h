@@ -34,17 +34,20 @@ typedef std::string URL;
 class NotFoundException : public ::apache::thrift::TException {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
 
-  NotFoundException() {
+  NotFoundException() : why("") {
   }
 
   virtual ~NotFoundException() throw() {}
 
+  std::string why;
 
-  bool operator == (const NotFoundException & /* rhs */) const
+  bool operator == (const NotFoundException & rhs) const
   {
+    if (!(why == rhs.why))
+      return false;
     return true;
   }
   bool operator != (const NotFoundException &rhs) const {
@@ -93,17 +96,20 @@ class InvalidRequestException : public ::apache::thrift::TException {
 class UnavailableException : public ::apache::thrift::TException {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
 
-  UnavailableException() {
+  UnavailableException() : why("") {
   }
 
   virtual ~UnavailableException() throw() {}
 
+  std::string why;
 
-  bool operator == (const UnavailableException & /* rhs */) const
+  bool operator == (const UnavailableException & rhs) const
   {
+    if (!(why == rhs.why))
+      return false;
     return true;
   }
   bool operator != (const UnavailableException &rhs) const {
@@ -121,17 +127,20 @@ class UnavailableException : public ::apache::thrift::TException {
 class TimedOutException : public ::apache::thrift::TException {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
+  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
 
-  TimedOutException() {
+  TimedOutException() : why("") {
   }
 
   virtual ~TimedOutException() throw() {}
 
+  std::string why;
 
-  bool operator == (const TimedOutException & /* rhs */) const
+  bool operator == (const TimedOutException & rhs) const
   {
+    if (!(why == rhs.why))
+      return false;
     return true;
   }
   bool operator != (const TimedOutException &rhs) const {

@@ -26,3 +26,4 @@ TARGET_LINK_LIBRARIES( fdbd
     )
 
 include( repo.cmake )
+include( token.cmake )

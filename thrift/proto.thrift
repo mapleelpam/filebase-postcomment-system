@@ -12,6 +12,7 @@ typedef string URL
 
 /** A specific column was requested that does not exist. */
 exception NotFoundException {
+    1: required string why
 }
 
 exception InvalidRequestException {
@@ -19,9 +20,11 @@ exception InvalidRequestException {
 }
 
 exception UnavailableException {
+    1: required string why
 }
 
 exception TimedOutException {
+    1: required string why
 }
 
 exception AuthenticationException {
@@ -41,6 +44,19 @@ enum DataFormat
     VIDEO,
 }
 
+service TokenService
+{
+    string getToken(1: string userId, 2: i32 default_expire_time = 30), // minutes
+
+    void removeToken(1: string token)
+        throws (1: NotFoundException nfe),
+
+    void checkToken(1: string token)
+        throws (1: NotFoundException nfe),
+
+    string getURL(1: string token, 2: string itemKey="")
+        throws (1: NotFoundException nfe),
+}
 
 service RepositoryService
 {
