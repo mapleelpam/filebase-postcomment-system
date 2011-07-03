@@ -23,7 +23,7 @@ using namespace tw::test;
 
 TokenManager *g_token_manager;
 
-struct cleanExpireContextThread
+struct ExpiredTokenCleanupThread
 {
     void operator()()
     {
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
     g_token_manager = new (std::nothrow) TokenManager();
 
     // create clean expire context thread
-    cleanExpireContextThread clean_context;
+    ExpiredTokenCleanupThread clean_context;
     boost::thread clean_thread(clean_context);
     clean_thread.detach();
 
